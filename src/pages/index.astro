@@ -13,18 +13,16 @@ const last_posts = posts.slice(0, 3);
   <div class="pb-12 mt-5">
     <div class="text-xl py-1">Hey there 👋</div>
     <div class="text-5xl font-bold">I'm Gabriele Durante</div>
-    <div class="text-3xl py-3 font-bold">Data Scientist and AI and Machine Learning Engineer</div>
+    <div class="text-3xl py-3 font-bold">Data Scientist and AI/Machine Learning Engineer</div>
     <div class="py-2">
       <text class="text-lg">
-        This is <b>Astrofy</b> a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS.
-        Create in minutes a website with Blog, CV, Project Section, Store and RSS Feed. I hope you find
-        it useful!
+        I'm a passionate data scientist and AI/ML engineer with a strong background in computer science and mathematics. I have experience working on a wide range of projects, from natural language processing to computer vision, and I'm always eager to learn new technologies and techniques. I believe that data science and AI have the power to transform industries and improve people's lives, and I'm excited to be a part of this rapidly evolving field.
       </text>
     </div>
     <div class="mt-8">
-      <a class="btn" href="https://twitter.com/manuelernestog" target="_blank"> Let's connect!</a>
-      <a href="https://github.com/manuelernestog/astrofy" target="_blank" class="btn btn-outline ml-5">
-        Get This template
+      <a class="btn" href="https://www.linkedin.com/in/gabrieledurante/" target="_blank"> Let's connect!</a>
+      <a href="https://github.com/exdsgift" target="_blank" class="btn btn-outline ml-5">
+        Github
       </a>
     </div>
   </div>
@@ -67,7 +65,7 @@ const last_posts = posts.slice(0, 3);
           title={post.data.title}
           img={post.data.heroImage}
           desc={post.data.description}
-          url={"/blog/" + createSlug(post.data.title, post.slug)}
+          url={"/astrofy_portfolio/blog/" + createSlug(post.data.title, post.slug)}
           target="_self"
           badge={post.data.badge}
         />
