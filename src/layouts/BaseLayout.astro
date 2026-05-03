@@ -23,13 +23,27 @@ const {
     <BaseHead title={title} description={description} image={image} , ogType={ogType} />
     {TRANSITION_API && <ViewTransitions />}
     <script is:inline>
-      const theme = localStorage.getItem("theme");
-      if (theme === null) {
-        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "lofi";
-        document.documentElement.setAttribute("data-theme", systemTheme);
-      } else {
-        document.documentElement.setAttribute("data-theme", theme);
+      function initTheme() {
+        const theme = localStorage.getItem("theme");
+        if (theme === null) {
+          const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "lofi";
+          document.documentElement.setAttribute("data-theme", systemTheme);
+        } else {
+          document.documentElement.setAttribute("data-theme", theme);
+        }
       }
+
+      initTheme();
+
+      // Ensure theme is applied after Astro View Transitions
+      document.addEventListener("astro:after-swap", initTheme);
+
+      // Listen for system theme changes if no manual theme is set
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+        if (!localStorage.getItem("theme")) {
+          document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "lofi");
+        }
+      });
     </script>
   </head>
   <body>

@@ -36,32 +36,20 @@
 </div>
 
 <script is:inline>
-    function applyTheme() {
-        const theme = localStorage.getItem("theme");
-        if (theme) {
-            document.documentElement.setAttribute("data-theme", theme);
-        } else {
-            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "lofi";
-            document.documentElement.setAttribute("data-theme", systemTheme);
-        }
+    function setupThemeControllers() {
+        const themeControllers = document.querySelectorAll(".theme-controller");
+        themeControllers.forEach((controller) => {
+            controller.addEventListener("change", (e) => {
+                const newTheme = e.target.value === "default" ? "lofi" : e.target.value;
+                document.documentElement.setAttribute("data-theme", newTheme);
+                localStorage.setItem("theme", newTheme);
+            });
+        });
     }
 
-    applyTheme();
+    // Initial setup
+    setupThemeControllers();
 
-    const themeControllers = document.querySelectorAll(".theme-controller");
-    themeControllers.forEach((controller) => {
-        controller.addEventListener("change", (e) => {
-            const newTheme = e.target.value === "default" ? "lofi" : e.target.value;
-            document.documentElement.setAttribute("data-theme", newTheme);
-            localStorage.setItem("theme", newTheme);
-        });
-    });
-
-    // Handle system theme changes
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-        if (!localStorage.getItem("theme")) {
-            const newTheme = e.matches ? "dark" : "lofi";
-            document.documentElement.setAttribute("data-theme", newTheme);
-        }
-    });
+    // Re-setup on view transitions
+    document.addEventListener("astro:after-swap", setupThemeControllers);
 </script>
