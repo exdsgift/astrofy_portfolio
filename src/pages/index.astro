@@ -12,55 +12,45 @@ const last_posts = posts.slice(0, 3);
 <BaseLayout sideBarActiveItemID="home">
   <div class="pb-12 mt-5">
     <div class="text-xl py-1">Hey there 👋</div>
-    <div class="text-5xl font-bold">I'm Gabriele Durante</div>
-    <div class="text-3xl py-3 font-bold">Data Scientist (wizard wasn't a job title on LinkedIn) | human first.</div>
+    <div class="text-5xl font-bold">I'm Gabriele</div>
+    <div class="text-3xl py-3 font-bold">Data Scientist and ML/AI Engineer</div>
     <div class="py-2">
       <text class="text-lg">
-        I'm a Data Scientist based in Tokyo, specializing in <b>Natural Language Processing</b> and <b>Large Language Models</b>. 
-        I focus on building privacy-first AI and advanced dialog systems. I'm also an EU Bioeconomy Youth Ambassador 
-        and passionate about entrepreneurship and social innovation.
+        ML/AI Engineer and EU Vulcanus Fellow in Japan (one of 23 selected across Europe from 500+ applicants). I work at the intersection of research and production: real-time speech-to-animation systems, agentic LLM pipelines, and open-source privacy-focused NLP tooling. Previously shipped RAG infrastructure and agentic workflows to production as a Data Scientist. I care about systems that hold up outside the lab. Feel free to explore my projects and blog to see what I'm up to! 🚀
       </text>
     </div>
     <div class="mt-8">
       <a class="btn" href="https://www.linkedin.com/in/gabrieledurante/" target="_blank"> Let's connect!</a>
       <a href="https://github.com/exdsgift" target="_blank" class="btn btn-outline ml-5">
-        My GitHub
+        Github
       </a>
     </div>
   </div>
 
   <div>
-    <div class="text-3xl w-full font-bold mb-2">My last projects {"</>"}</div>
+    <div class="text-3xl w-full font-bold mb-2">My last projects</div>
   </div>
 
   <HorizontalCard
     title="NerGuard"
-    img="/astrofy_portfolio/post_img.webp"
-    desc="A privacy-focused tool designed to detect PII (Personally Identifiable Information) quickly, enabling secure RAG and privacy-first AI applications."
-    url="https://github.com/exdsgift"
+    img="/astrofy_portfolio/public/images/screen1.png"
+    desc="A privacy-focused tool designed to detect PII quickly, enabling secure RAG and privacy-first AI applications."
+    url="https://github.com/exdsgift/NerGuard"
     badge="NLP"
   />
-  <div class="divider my-0"></div>
   <HorizontalCard
-    title="Linkr (AnklePiar)"
-    img="/astrofy_portfolio/post_img.webp"
-    desc="Winner of the University Startup Challenge 2024. A platform connecting students with companies for financial support and career paths."
-    url="https://github.com/exdsgift"
-    badge="STARTUP"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="nv-ingest (Fork)"
-    img="/astrofy_portfolio/post_img.webp"
-    desc="Parsing complex unstructured documents for LLM embeddings using NVIDIA's NeMo-Retriever ecosystem."
-    url="https://github.com/exdsgift"
+    title="SynapseLink"
+    img="/astrofy_portfolio/public/images/Screenshot 2026-03-05 at 16.22.03.png"
+    desc="real-time audio-driven facial animation system generating 52 blendshapes at 25 fps (204× faster than real-time, single GPU). Designed a custom training objective for expressiveness (+91.8% over baseline), achieving a 7–43× lighter model than FaceFormer/CodeTalker."
+    url="https://github.com/exdsgift/intella-synapse-link"
+    badge="Publication"
   />
 
-  <div>
+  <!-- <div>
     <div class="text-3xl w-full font-bold mb-5 mt-10">Latest from blog</div>
-  </div>
+  </div> -->
 
-  {
+  <!-- {
     last_posts.map((post) => (
       <>
         <HorizontalCard
@@ -74,5 +64,5 @@ const last_posts = posts.slice(0, 3);
         <div class="divider my-0" />
       </>
     ))
-  }
+  } -->
 </BaseLayout>
