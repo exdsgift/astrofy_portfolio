@@ -31,14 +31,14 @@ const last_posts = posts.slice(0, 3);
   </div>
 <HorizontalCard
   title="NerGuard"
-  img="/astrofy_portfolio/images/screen1.png"
+  img="/images/screen1.png"
   desc="A privacy-focused tool designed to detect PII quickly, enabling secure RAG and privacy-first AI applications."
   url="https://github.com/exdsgift/NerGuard"
   badge="NLP"
 />
 <HorizontalCard
   title="SynapseLink"
-  img="/astrofy_portfolio/images/Screenshot 2026-03-05 at 16.22.03.png"
+  img="/images/Screenshot 2026-03-05 at 16.22.03.png"
   desc="real-time audio-driven facial animation system generating 52 blendshapes at 25 fps (204× faster than real-time, single GPU). Designed a custom training objective for expressiveness (+91.8% over baseline), achieving a 7–43× lighter model than FaceFormer/CodeTalker."
   url="https://github.com/exdsgift/intella-synapse-link"
   badge="AI"
@@ -55,7 +55,7 @@ const last_posts = posts.slice(0, 3);
           title={post.data.title}
           img={post.data.heroImage}
           desc={post.data.description}
-          url={"/astrofy_portfolio/blog/" + createSlug(post.data.title, post.slug)}
+          url={"/blog/" + createSlug(post.data.title, post.slug)}
           target="_self"
           badge={post.data.badge}
         />

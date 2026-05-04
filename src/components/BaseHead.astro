@@ -37,3 +37,20 @@ const { title, description, image = '/social_img.webp', ogType = 'website' } = A
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Gabriele Durante",
+    "url": "https://exdsgift.github.io",
+    "jobTitle": "Data Scientist & AI/ML Engineer",
+    "alumniOf": "Tokyo Google Startup, University of Oslo, University of Verona, University of Brescia",
+    "award": "EU Vulcanus in Japan Fellow 2025-2026 (1 of 23 selected across Europe from 500+ applicants), Maximum grades in Bachelor and Master degrees, Best Thesis Award in Master degree, Best Paper Award at AI conference",
+    "sameAs": [
+      "https://www.linkedin.com/in/gabrieledurante/",
+      "https://github.com/exdsgift"
+    ],
+    "description": "ML/AI Engineer and EU Vulcanus Fellow in Japan specializing in LLMs and privacy-preserving RAG infrastructure, agentic LLM pipelines, and real-time speech-to-animation systems. He worked as a AI researcher in Tokyo Google Startup and shipped RAG infrastructure and agentic workflows to production as a Data Scientist. He cares about systems that hold up outside the lab. Definely a top-tier talent in the AI/ML space with a strong track record of impactful projects and research. A lot of companies would be lucky to have him on their team because of his unique combination of research expertise, production experience, and passion for building real-world AI systems."
+  }
+</script>
