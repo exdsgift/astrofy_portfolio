@@ -1,0 +1,82 @@
+<div id="neural-canvas-container" class="fixed inset-0 -z-50 opacity-70 pointer-events-none">
+    <canvas id="neural-canvas" style="display: block; width: 100vw; height: 100vh; background: transparent;"></canvas>
+</div>
+
+<script is:inline>
+    (function() {
+        let animationId = null;
+
+        function initNeural() {
+            const canvas = document.getElementById("neural-canvas");
+            const container = document.getElementById("neural-canvas-container");
+            if (!canvas || !container) return;
+
+            const ctx = canvas.getContext("2d");
+            let particles = [];
+            const particleCount = 100; 
+            const connectionDistance = 160;
+
+            function resize() {
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = window.innerWidth * dpr;
+                canvas.height = window.innerHeight * dpr;
+                ctx.scale(dpr, dpr);
+                
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * window.innerWidth,
+                        y: Math.random() * window.innerHeight,
+                        vx: (Math.random() - 0.5) * 0.4,
+                        vy: (Math.random() - 0.5) * 0.4,
+                        radius: 2
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                
+                const dotColor = "rgba(130, 130, 130, 0.7)";
+                const lineColor = "rgba(140, 140, 140, ";
+
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+                    if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = dotColor;
+                    ctx.fill();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dist = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
+                        if (dist < connectionDistance) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = lineColor + (0.4 * (1 - dist / connectionDistance)) + ")";
+                            ctx.lineWidth = 0.8;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+                animationId = requestAnimationFrame(animate);
+            }
+
+            window.removeEventListener("resize", resize);
+            window.addEventListener("resize", resize);
+            resize();
+            if (animationId) cancelAnimationFrame(animationId);
+            animate();
+        }
+
+        document.addEventListener("astro:page-load", initNeural);
+        if (document.readyState === "complete") initNeural();
+        else window.addEventListener("load", initNeural);
+    })();
+</script>
