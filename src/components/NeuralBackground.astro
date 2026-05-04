@@ -1,10 +1,12 @@
-<div id="neural-canvas-container" class="fixed inset-0 -z-50 opacity-70 pointer-events-none">
+<div id="neural-canvas-container" class="fixed inset-0 -z-50 opacity-55 pointer-events-none">
     <canvas id="neural-canvas" style="display: block; width: 100vw; height: 100vh; background: transparent;"></canvas>
 </div>
 
 <script is:inline>
     (function() {
         let animationId = null;
+        let lastWidth = window.innerWidth;
+        let lastHeight = window.innerHeight;
 
         function initNeural() {
             const canvas = document.getElementById("neural-canvas");
@@ -13,39 +15,54 @@
 
             const ctx = canvas.getContext("2d");
             let particles = [];
-            const particleCount = 100; 
-            const connectionDistance = 160;
+            const particleCount = 80; 
+            const connectionDistance = 150;
 
-            function resize() {
+            function resize(force = false) {
+                // Prevent mobile scroll resize glitch by checking if dimensions actually changed significantly
+                // (Mobile browsers resize height when address bar hides/shows)
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                
+                if (!force && Math.abs(width - lastWidth) < 50 && Math.abs(height - lastHeight) < 150) {
+                    return;
+                }
+
+                lastWidth = width;
+                lastHeight = height;
+
                 const dpr = window.devicePixelRatio || 1;
-                canvas.width = window.innerWidth * dpr;
-                canvas.height = window.innerHeight * dpr;
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
                 ctx.scale(dpr, dpr);
                 
                 particles = [];
                 for (let i = 0; i < particleCount; i++) {
                     particles.push({
-                        x: Math.random() * window.innerWidth,
-                        y: Math.random() * window.innerHeight,
+                        x: Math.random() * width,
+                        y: Math.random() * height,
                         vx: (Math.random() - 0.5) * 0.4,
                         vy: (Math.random() - 0.5) * 0.4,
-                        radius: 2
+                        radius: 1.8
                     });
                 }
             }
 
             function animate() {
-                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                ctx.clearRect(0, 0, lastWidth, lastHeight);
                 
-                const dotColor = "rgba(130, 130, 130, 0.7)";
+                const dotColor = "rgba(130, 130, 130, 0.6)";
                 const lineColor = "rgba(140, 140, 140, ";
 
                 particles.forEach((p, i) => {
                     p.x += p.vx;
                     p.y += p.vy;
 
-                    if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
-                    if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+                    // Wrap around screen instead of bouncing for smoother feel on mobile
+                    if (p.x < 0) p.x = lastWidth;
+                    if (p.x > lastWidth) p.x = 0;
+                    if (p.y < 0) p.y = lastHeight;
+                    if (p.y > lastHeight) p.y = 0;
 
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -54,11 +71,14 @@
 
                     for (let j = i + 1; j < particles.length; j++) {
                         const p2 = particles[j];
-                        const dist = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
                         if (dist < connectionDistance) {
                             ctx.beginPath();
-                            ctx.strokeStyle = lineColor + (0.4 * (1 - dist / connectionDistance)) + ")";
-                            ctx.lineWidth = 0.8;
+                            ctx.strokeStyle = lineColor + (0.35 * (1 - dist / connectionDistance)) + ")";
+                            ctx.lineWidth = 0.7;
                             ctx.moveTo(p.x, p.y);
                             ctx.lineTo(p2.x, p2.y);
                             ctx.stroke();
@@ -69,8 +89,8 @@
             }
 
             window.removeEventListener("resize", resize);
-            window.addEventListener("resize", resize);
-            resize();
+            window.addEventListener("resize", () => resize(false));
+            resize(true);
             if (animationId) cancelAnimationFrame(animationId);
             animate();
         }
