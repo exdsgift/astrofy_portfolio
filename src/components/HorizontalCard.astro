@@ -5,7 +5,12 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
 <div
-  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out project-card"
+  data-tilt
+  data-tilt-max="10"
+  data-tilt-speed="1000"
+  data-tilt-glare
+  data-tilt-max-glare="0.5"
 >
   <a href={url} target={target}>
     <div class="hero-content flex-col md:flex-row">
@@ -41,3 +46,19 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
     </div>
   </a>
 </div>
+
+<script is:inline>
+  function initTilt() {
+    if (window.VanillaTilt) {
+      VanillaTilt.init(document.querySelectorAll(".project-card"), {
+        max: 10,
+        speed: 1000,
+        glare: true,
+        "max-glare": 0.5,
+      });
+    }
+  }
+  document.addEventListener("astro:page-load", initTilt);
+  // Initial run for first page load
+  initTilt();
+</script>
