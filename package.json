@@ -1,6 +1,6 @@
 {
-  "name": "my-new-portfolio",
-  "description": "Astrofy is a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS. Create in minutes a website with Blog, CV, Project Section, Store and RSS Feed.",
+  "name": "gabriele-durante-portfolio",
+  "description": "Personal Portfolio and Blog of Gabriele Durante, ML/AI Engineer and Data Scientist.",
   "type": "module",
   "version": "3.0.0",
   "scripts": {

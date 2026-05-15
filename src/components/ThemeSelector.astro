@@ -27,11 +27,9 @@
         </svg>
     </div>
     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52">
-        <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Default" value="default"/></li>
+        <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="System" value="system"/></li>
+        <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Light" value="light"/></li>
         <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Dark" value="dark"/></li>
-        <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Cupcake" value="cupcake"/></li>
-        <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Corporate" value="corporate"/></li>
-        <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Synthwave" value="synthwave"/></li>
     </ul>
 </div>
 
@@ -40,9 +38,14 @@
         const themeControllers = document.querySelectorAll(".theme-controller");
         themeControllers.forEach((controller) => {
             controller.addEventListener("change", (e) => {
-                const newTheme = e.target.value === "default" ? "lofi" : e.target.value;
-                document.documentElement.setAttribute("data-theme", newTheme);
-                localStorage.setItem("theme", newTheme);
+                if (e.target.value === "system") {
+                    localStorage.removeItem("theme");
+                    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                    document.documentElement.setAttribute("data-theme", systemTheme);
+                } else {
+                    document.documentElement.setAttribute("data-theme", e.target.value);
+                    localStorage.setItem("theme", e.target.value);
+                }
             });
         });
     }

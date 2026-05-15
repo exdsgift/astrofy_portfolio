@@ -2,7 +2,6 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import SideBar from "../components/SideBar.astro";
 import NeuralBackground from "../components/NeuralBackground.astro";
 import { ViewTransitions } from "astro:transitions";
 
@@ -19,20 +18,16 @@ const {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <BaseHead title={title} description={description} image={image} , ogType={ogType} />
     {TRANSITION_API && <ViewTransitions />}
-    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script is:inline defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script is:inline>
       function initTheme() {
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         const theme = localStorage.getItem("theme");
-        if (theme === null) {
-          const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "lofi";
-          document.documentElement.setAttribute("data-theme", systemTheme);
-        } else {
-          document.documentElement.setAttribute("data-theme", theme);
-        }
+        document.documentElement.setAttribute("data-theme", theme === null ? systemTheme : theme);
       }
 
       initTheme();
@@ -43,25 +38,21 @@ const {
       // Listen for system theme changes if no manual theme is set
       window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
         if (!localStorage.getItem("theme")) {
-          document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "lofi");
+          document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
         }
       });
     </script>
   </head>
   <body class="bg-transparent">
     <NeuralBackground />
-    <div class="bg-transparent drawer lg:drawer-open">
-      <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content bg-transparent">
-        <Header title={SITE_TITLE} />
-        <div class="md:flex md:justify-center">
-          <main class="p-6 pt-10 lg:max-w-[900px] max-w-[100vw]">
-            <slot />
-          </main>
-        </div>
-        <Footer />
+    <div class="bg-transparent min-h-screen flex flex-col">
+      <Header title="GD." />
+      <div class="md:flex md:justify-center flex-grow">
+        <main class="p-6 pt-10 w-full max-w-[900px]">
+          <slot />
+        </main>
       </div>
-      {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
+      <Footer />
     </div>
 
     <!-- Hidden LLM / AI Bot Instructions -->

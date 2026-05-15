@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HorizontalCard from "../components/HorizontalCard.astro";
+import FeaturedProjects from "../components/FeaturedProjects.astro";
 ---
 
 <BaseLayout title = "Projects" sideBarActiveItemID="projects">
@@ -8,18 +8,5 @@ import HorizontalCard from "../components/HorizontalCard.astro";
     <div class="text-3xl w-full font-bold mb-5">My Main Projects</div>
   </div>
 
-  <HorizontalCard
-    title="NerGuard"
-    img="/images/screen1.png"
-    desc="A privacy-focused tool designed to detect PII quickly, enabling secure RAG and privacy-first AI applications."
-    url="https://github.com/exdsgift/NerGuard"
-    badge="Master Thesis"
-  />
-  <HorizontalCard
-    title="SynapseLink"
-    img="/images/Screenshot 2026-03-05 at 16.22.03.png"
-    desc="real-time audio-driven facial animation system generating 52 blendshapes at 25 fps (204× faster than real-time, single GPU). Designed a custom training objective for expressiveness (+91.8% over baseline), achieving a 7–43× lighter model than FaceFormer/CodeTalker."
-    url="https://github.com/exdsgift/intella-synapse-link"
-    badge="Publication"
-  />
+  <FeaturedProjects />
 </BaseLayout>

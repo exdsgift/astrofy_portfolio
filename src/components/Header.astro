@@ -1,23 +1,72 @@
 ---
 import ThemeSelector from "./ThemeSelector.astro";
+const { title = "GD." } = Astro.props;
 ---
 
-<div
-  class="sticky lg:hidden top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-base-100 text-base-content shadow-sm"
->
-  <div class="navbar">
+<div class="sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100 bg-base-100 text-base-content shadow-sm">
+  <div class="navbar max-w-[900px] w-full">
     <div class="navbar-start">
-      <label for="my-drawer" class="btn btn-square btn-ghost">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"
-          ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </label>
+      <a class="btn btn-ghost normal-case text-xl font-mono" href="/">{title}</a>
     </div>
-    <div class="navbar-center">
-      <a class="btn btn-ghost normal-case text-xl" href="/">Gabriele Durante</a>
+    <div class="navbar-center hidden sm:flex">
+      <ul class="menu menu-horizontal px-1 font-mono">
+        <li><a href="/">Home</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/cv">CV</a></li>
+      </ul>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end flex space-x-2">
+      <!-- Mobile menu button -->
+      <div class="sm:hidden">
+        <button id="mobile-menu-btn" class="btn btn-ghost btn-circle" aria-label="Open Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </div>
       <ThemeSelector />
     </div>
   </div>
 </div>
+
+<!-- Full-screen Mobile Menu -->
+<div id="mobile-menu-overlay" class="fixed inset-0 z-50 bg-base-100/95 backdrop-blur-lg hidden flex-col justify-center items-center space-y-8 text-2xl font-mono transition-opacity opacity-0 duration-300">
+  <button id="mobile-menu-close" class="absolute top-4 right-4 btn btn-ghost btn-circle" aria-label="Close Menu">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+  </button>
+  <a href="/" class="hover:text-primary transition-colors">Home</a>
+  <a href="/projects" class="hover:text-primary transition-colors">Projects</a>
+  <a href="/blog" class="hover:text-primary transition-colors">Blog</a>
+  <a href="/cv" class="hover:text-primary transition-colors">CV</a>
+</div>
+
+<script is:inline>
+  function setupMobileMenu() {
+    const btnOpen = document.getElementById('mobile-menu-btn');
+    const btnClose = document.getElementById('mobile-menu-close');
+    const menu = document.getElementById('mobile-menu-overlay');
+
+    function toggleMenu() {
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        setTimeout(() => menu.classList.remove('opacity-0'), 10);
+        document.body.style.overflow = 'hidden';
+      } else {
+        menu.classList.add('opacity-0');
+        setTimeout(() => menu.classList.add('hidden'), 300);
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Clean up old listeners to avoid duplicates on astro page loads
+    const newBtnOpen = btnOpen?.cloneNode(true);
+    const newBtnClose = btnClose?.cloneNode(true);
+    btnOpen?.parentNode?.replaceChild(newBtnOpen, btnOpen);
+    btnClose?.parentNode?.replaceChild(newBtnClose, btnClose);
+
+    newBtnOpen?.addEventListener('click', toggleMenu);
+    newBtnClose?.addEventListener('click', toggleMenu);
+  }
+
+  setupMobileMenu();
+  document.addEventListener("astro:after-swap", setupMobileMenu);
+</script>

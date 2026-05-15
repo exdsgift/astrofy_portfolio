@@ -5,7 +5,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
 <div
-  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out project-card"
+  class="rounded-lg bg-base-100 hover:shadow-[0_0_20px_rgba(var(--fallback-p,var(--p)),0.3)] transition ease-in-out duration-300 project-card"
   data-tilt
   data-tilt-max="10"
   data-tilt-speed="1000"
@@ -22,6 +22,8 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
             height={422}
             format="webp"
             alt={title}
+            loading="lazy"
+            decoding="async"
             class="max-w-full md:max-w-[13rem] rounded-lg"
           />
         )
